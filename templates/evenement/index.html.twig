@@ -28,7 +28,7 @@
                             <tr>
                                 <th scope="row">{{ evenement.id_event }}</th>
                                 <td>{{ evenement.event_name }}</td>
-                                <td>{{ evenement.description }}</td>
+                                <td >{{ evenement.description }}</td>
                                 <td>{{ evenement.event_date ? evenement.event_date|date('Y-m-d') : '' }}</td>
                                 <td><img src="{{ asset('AdminPart/images/' ~ evenement.image) }}"
                                 alt="" style="width:40px; height: 40px "></td>
