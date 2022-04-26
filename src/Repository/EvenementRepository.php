@@ -73,4 +73,17 @@ class EvenementRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByWord($keyword){
+        $query = $this->createQueryBuilder('e')
+            ->where('e.event_name LIKE :key')
+            ->orderBy('e.id', 'ASC')
+            ->setParameter('key' , '%'.$keyword.'%')->getQuery();
+
+        return $query->getResult();
+    }
+
+
 }
+
+

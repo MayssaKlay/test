@@ -32,11 +32,15 @@
             <th>Nbr_members</th>
             <td>{{ club.nbr_members }}</td>
         </tr>
+        <tr>
+            <th>Nbr events</th>
+            <td>{{ club.getEvenements() }}</td>
+        </tr>
         </tbody>
     </table>
 
 
-    <B><a style="color:#642517" href="{{ path('app_adminclb_index') }}">Retour au liste des clubs</a></B>
+    <B><a style="margin-left:1050px" href="{{ path('app_adminclb_index') }}">Retour</a></B>
 
 
 

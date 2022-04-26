@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ClubRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClubRepository::class)
@@ -17,7 +20,14 @@ class Club
      */
     private $id;
 
+
     /**
+     * @Assert\NotBlank(message="nom doit être non vide")
+     * @Assert\Length(
+     *     min = 5,
+     *     minMessage="Entrer un nom au mininmum de 5 caractéres"
+     *
+     * )
      * @ORM\Column(type="string", length=255)
      */
     public $nom_club;
@@ -45,6 +55,20 @@ class Club
     private $imageclb;
 
 
+    /**
+     * @ORM\Column(name="access" ,type="boolean" ,options={"default":true})
+     */
+    private $access;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Evenement::class, mappedBy="club" , orphanRemoval=true)
+     */
+    private $evenements;
+
+    public function __construct()
+    {
+        $this->evenements = new ArrayCollection();
+    }
 
 
 
@@ -102,6 +126,25 @@ class Club
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAccess()
+    {
+        return $this->access;
+    }
+
+    /**
+     * @param mixed $access
+     */
+    public function setAccess($access): void
+    {
+        $this->access = $access;
+    }
+
+
+
+
 
     public function getImageclb()
     {
@@ -113,6 +156,42 @@ class Club
     {
         $this->imageclb = $imageclb;
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Evenement>
+     */
+    public function getEvenements(): Collection
+    {
+        return $this->evenements;
+    }
+
+    public function addEvenement(Evenement $evenement): self
+    {
+        if (!$this->evenements->contains($evenement)) {
+            $this->evenements[] = $evenement;
+            $evenement->setClub($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(Evenement $evenement): self
+    {
+        if ($this->evenements->removeElement($evenement)) {
+            // set the owning side to null (unless already changed)
+            if ($evenement->getClub() === $this) {
+                $evenement->setClub(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    public function __toString()
+    {
+        return(string)$this->getNom_club();
     }
 
 

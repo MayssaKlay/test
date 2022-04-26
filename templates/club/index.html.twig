@@ -14,7 +14,7 @@
 
                     <a class="catagotie-head" href="{{ path('app_club_show', {'id': club.id})}}">
                         <img src="{{ asset('UserPart/imgs/' ~ club.imageclb) }}"
-                             alt="" style="width:350px; height: 450px ">
+                             alt="" style="width: 250px;height: 200px; ">
                         <h3>Nom du Club : {{ club.nom_club }}</h3>
                         <h4>Admin Club : {{ club.club_owner }}</h4>
                     </a>
@@ -23,7 +23,7 @@
                         <p>Nombre des membres : {{ club.nbr_members }}</p>
                         <p>
                             <a href="{{ path('app_club_show', {'id': club.id})}}" class="btn btn-default btn-transparent" role="button">
-                                <button href="{{ path('app_club_show', {'id': club.id}) }}">Rejoindre </button>
+                                <button href="{{ path('app_usrevent_showall', {'id': club.id}) }}">Rejoindre </button>
                             </a>
                             <a href="{{ path('app_club_delete', {'id': club.id})}}" class="btn btn-default btn-transparent" role="button">
                                 <button href="{{ path('app_club_delete', {'id': club.id}) }}">Supprimer </button>

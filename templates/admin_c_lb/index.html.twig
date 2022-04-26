@@ -13,6 +13,7 @@
             <th bgcolor="#a0bbe6">Date creation</th>
             <th bgcolor="#a0bbe6">Club Owner</th>
             <th bgcolor="#a0bbe6">Nombre des membres</th>
+            <th bgcolor="#a0bbe6">Image Club</th>
             <th bgcolor="#a0bbe6">Actions</th>
         </tr>
         </thead>
@@ -27,9 +28,9 @@
                 <td><img src="{{ asset('UserPart/imgs/' ~ clb.imageclb) }}"
                          alt="" style="width:40px; height: 40px "></td>
 
+
                 <td>
                     <a href="{{ path('app_adminclb_show', {'id': clb.id}) }}">Détails</a>  &nbsp;
-                   &nbsp;
 
 
 

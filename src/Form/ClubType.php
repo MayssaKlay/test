@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Club;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,8 +18,25 @@ class ClubType extends AbstractType
             ->add('date_creation')
             ->add('club_owner')
             ->add('nbr_members')
-            ->add('imageclb', FileType::class, array('data_class' => null,'required' => false))
-        ;
+            ->add('imageclb', FileType::class
+                , array('data_class' => null,'required' => false))
+            ->add('access', ChoiceType::class, [
+                'choices' => [
+                    'public' => true,
+                    'prive' => false
+                ]
+            ]);
+
+           /* ->add('access', ChoiceType::class, array(
+                'choices' => array(
+                    'public' => 1,
+                    'privé' => 2
+                ),
+                'label' => 'Type Club',
+                'required' => true,
+
+            ));*/
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

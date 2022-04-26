@@ -116,13 +116,6 @@
 
                     <li><a  href="{{ path('app_club_index') }}">Clubs</a></li>
                     <li><a  href="{{ path('app_user_event') }}">Evenements</a></li>
-                    <li><a href="blog-single.html">blog</a></li>
-                    <li class="dropdown">
-                        <a href="#">
-                            PAGES
-                            <span class="caret"></span>
-                        </a>
-                    </li> <!-- End of /.dropdown -->
 
 
                 </ul> <!-- End of /.nav-main -->
@@ -134,6 +127,7 @@
 
     {% block title %}Hello UserEventController{% endblock %}
     {% block body %}
+     <h1>Détails</h1>
 <section id="blog">
     <div class="container">
         <div class="row">
@@ -145,7 +139,7 @@
                         </div>
                         <div class="blog-box">
                             <img src="{{ asset('AdminPart/images/' ~ evenement.image) }}"
-                                 alt="" style="width:760px; height: 550px ">
+                                 alt="" style="width: 500px; height: 400px; margin-left: 120px;">
 
                             <div class="blog-post-body clearfix">
                                 <a href="">
@@ -164,16 +158,20 @@
                                     </div>
                                 </div>
                                 <p>{{ evenement.description }}</p>
-                            </div>
+                            </div><br><br><br>
+                            <p>
+                            <B style="margin-left: 200px;">Vous trouvez ici le CODE QR de cet événement </B>
+                            <div> <img style="width:200px; height: 200px;margin-left: 250px;" src="{{ qr_code_url( app.request.uri ) }}" /> </div>
+                          </p>
                         </div>
                     </li>
                 </ul>
             </div>
 
         </div>
-         <B><a style="color:#642517" href="{{ path('app_user_event') }}">Retour au liste des événements</a></B>
+
     </div>
 
 </section>
-
+ <B><a style="margin-left: 80px;" href="{{ path('app_user_event') }}">Retour </a></B>
 {% endblock %}

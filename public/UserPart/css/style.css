@@ -54,7 +54,7 @@ section+section { margin-top: 50px; }
 	width: 100%;
 	background: #e39c1c91;
 	font-size: 12px;
-	color: #1a1919;;
+	color: #1a1919;
 	padding: 5px 0;
 
 }
@@ -1216,5 +1216,5 @@ footer .block span {
 }
 
 th,td{
-	color: #642517;
+	color: #000000;
 }

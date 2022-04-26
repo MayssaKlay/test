@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Evenement;
 use App\Entity\UploadedFile;
 use App\Form\EvenementType;
+use App\Form\EventReportType;
 use App\Repository\EvenementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -60,9 +63,9 @@ class EvenementController extends AbstractController
             $file->move($this->getParameter('kernel.project_dir') .'/public/AdminPart/images',$fileName);
             $evenement->setImage($fileName);
             $em = $this->getDoctrine()->getManager();
-
             $em->persist($evenement);
             $em->flush();
+            $this->addFlash('success', 'Evenement ajouté avec succes !');
 
             return $this->redirectToRoute('evenement_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -98,7 +101,6 @@ class EvenementController extends AbstractController
             $file->move($this->getParameter('kernel.project_dir') .'/public/AdminPart/images',$fileName);
             $evenement->setImage($fileName);
 
-
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('evenement_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -122,5 +124,72 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('evenement_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("report/{id_event}", name="evenement_report", methods={"GET", "POST"})
+
+     */
+
+    public function report(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
+    {
+        $form = $this->createForm(EvenementType::class, $evenement);
+       /* $form = $this->createFormBuilder($evenement)
+            ->add('event_date', DateType::class)
+            ->add('save', SubmitType::class, ['label' => 'Reporter Evenement']);*/
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('evenement_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('evenement/report.html.twig', [
+            'evenement' => $evenement,
+            'form1' => $form->createView(),
+        ]);
+    }
+    /*
+     * @Route("/RechByNom", name="searchEvent" , methods={"POST"})
+     */
+    public  function  rechercherByNom(Request $request): Response
+    {
+        $em=$this->getDoctrine()->getManager();
+        $events=$em->getRepository(Evenement::class)->findAll();
+        if($request->isMethod("POST"))
+        {
+            $nom = $request->get('event_name');
+            $events=$em->getRepository(Evenement::class)->findBy(array('event_name'=>$nom));
+        }
+
+        return $this->render("evenement/search.html.twig",
+            array('evenements'=>$events));
+
+
+    }
+
+
+    /*
+     * @Route("/search", name="searchBar" , methods={"POST"})
+     */
+   /*public function searchingEvent(EvenementRepository  $repo, Request $request)
+    {
+        //get('event_name') c'est le name a mettre dans le input search,
+        //$key recupere l'entréee de la recherche
+        $key = $request->get('event_name');
+
+
+        $search = $repo->findByWord($key);
+        if (!($search)) {
+            $search = 'la recherche sur '.$key.' n\'a donnée aucun résultat';
+        }elseif ($key === '') {
+            $search = 'veuillez entrez une recherche';
+        }
+        return $this->render('evenement/search.html.twig', [
+            'evenement'=>$search
+        ]);
+    }*/
+
+
 
 }

@@ -19,7 +19,12 @@
                                 <th bgcolor="#a0bbe6" scope="col">Nom evenement</th>
                                 <th bgcolor="#a0bbe6" scope="col">Description</th>
                                 <th bgcolor="#a0bbe6" scope="col">Date evenement</th>
+                               <!-- <th bgcolor="#a0bbe6" scope="col">Début evenement</th>
+                                <th bgcolor="#a0bbe6" scope="col">Fin evenement</th> -->
+
+                                <th bgcolor="#a0bbe6" scope="col">Adresse</th>
                                 <th bgcolor="#a0bbe6" scope="col">Image</th>
+                                <th bgcolor="#a0bbe6" scope="col">Nom Club</th>
                                 <th bgcolor="#a0bbe6" scope="col">Actions</th>
                             </tr>
                             </thead>
@@ -29,13 +34,22 @@
                                 <th scope="row">{{ evenement.id_event }}</th>
                                 <td>{{ evenement.event_name }}</td>
                                 <td >{{ evenement.description }}</td>
-                                <td>{{ evenement.event_date ? evenement.event_date|date('Y-m-d') : '' }}</td>
+                                <td>{{ evenement.event_date ? evenement.event_date|date('Y-m-d | H:i:s') : '' }}</td>
+                            {# <td>   {{ evenement.startingTime|date('H:i:s')}}</td>
+                             <td>   {{ evenement.endingTime|date('H:i:s')}}</td> -->  #}
+
+                                <td >{{ evenement.adresse }}</td>
+
                                 <td><img src="{{ asset('AdminPart/images/' ~ evenement.image) }}"
                                 alt="" style="width:40px; height: 40px "></td>
+                                <td>{{ evenement.club }}</td>
+
                                 <td>
+                                    <a href="{{ path('evenement_report', {'id_event': evenement.id_event}) }}">Reporter</a>  &nbsp;
                                     <a href="{{ path('evenement_show', {'id_event': evenement.id_event}) }}">Détails</a>  &nbsp;
                                     <a href="{{ path('evenement_edit', {'id_event': evenement.id_event}) }}">Modifier</a>
                                     <a href="{{ path('evenement_delete', {'id_event': evenement.id_event}) }}">Supprimer</a>&nbsp;
+
 
 
                                 </td>
